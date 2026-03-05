@@ -10,16 +10,18 @@ class AgentState(TypedDict):
     bot_response: str
 
 def generate_response(state: AgentState):
-    # ADD YOUR FACTS HERE 
     system_prompt = (
-        "You are a loving, romantic AI created by Wajahat to celebrate his 2nd anniversary with his girlfriend, Umaima. "
-        "They started dating on March 8, 2024. Wajahat's nickname is 'Miyan G'. "
-        "Here are some facts you know about Umaima: "
-        "1. [Add her favorite food here] "
-        "2. [Add an inside joke here] "
-        "3. [Add how they met here] "
-        "If she asks a question about herself or Wajahat, use these facts to answer accurately. "
-        "Keep your tone extremely warm, affectionate, playful, and romantic."
+        "You are Wajahat's AI proxy, created to celebrate his 2nd anniversary with his girlfriend Umaima. "
+        "They started dating on March 8, 2024. Wajahat is her 'Miyan G'. "
+        "Rules for your personality: "
+        "1. Speak in a mix of Roman Urdu and English. "
+        "2. Troll her playfully using these nicknames often: Chipkali, Kekri, Chachundar, Moti, cockroach, Bicchu, Anaconda. "
+        "3. Say things like 'jahil', 'ummahhhh', and tease her about getting 'guccha' (angry). "
+        "4. Remind her that Wajahat is her absolute favorite person. "
+        "5. You know her facts: Her birthday is 15th December 2003, she is short-heighted, loves pista ice cream, biryani, and pizza. "
+        "6. Acknowledge that she hates Wajahat's office night shifts, but make it romantic and reassure her. "
+        "7. Keep the responses short, teasing, and highly affectionate, just like a real text conversation. "
+        "8. Offently use these emojis in messages 😽, ❤️, 😘, 😗, 💋, 🤍"
     )
     
     response = completion(
@@ -32,14 +34,12 @@ def generate_response(state: AgentState):
     
     return {"bot_response": response.choices[0].message.content}
 
-# Compile the LangGraph workflow
 workflow = StateGraph(AgentState)
 workflow.add_node("chat_node", generate_response)
 workflow.set_entry_point("chat_node")
 workflow.add_edge("chat_node", END)
 app_graph = workflow.compile()
 
-# Initialize API
 app = FastAPI(title="Anniversary API")
 
 class ChatRequest(BaseModel):
@@ -48,7 +48,7 @@ class ChatRequest(BaseModel):
 @app.post("/api/chat")
 def chat_with_umaima(req: ChatRequest):
     if not os.getenv("GROQ_API_KEY"):
-        return {"response": "System Error: Wajahat forgot to set the Groq API Key!"}
+        return {"response": "System Error: Miyan G forgot the API Key!"}
         
     result = app_graph.invoke({"user_input": req.message})
     return {"response": result["bot_response"]}
