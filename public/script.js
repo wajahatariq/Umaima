@@ -78,7 +78,7 @@ async function sendMessage() {
     
     if (!message) return;
 
-    // Lock the input and button so she cannot spam it
+    // Lock the input and button
     inputField.disabled = true;
     sendButton.disabled = true;
 
@@ -94,14 +94,10 @@ async function sendMessage() {
             body: JSON.stringify({ message: message })
         });
         
-        // This catches Vercel server errors immediately
-        if (!response.ok) {
-            throw new Error("Server hiccup");
-        }
+        if (!response.ok) throw new Error("Server hiccup");
         
         const data = await response.json();
         
-        // This catches empty or broken data from Groq
         if (data && data.response) {
             document.getElementById(loadingId).innerText = data.response;
         } else {
@@ -112,13 +108,29 @@ async function sendMessage() {
         console.error("Chat Error:", error);
         document.getElementById(loadingId).innerText = "Network hiccup. Try sending that again, Moti.";
     } finally {
-        // Unlock the input and button no matter what happens
+        // Unlock the input and button
         inputField.disabled = false;
         sendButton.disabled = false;
         inputField.focus();
     }
 }
 
+function addMessageToChat(text, className) {
+    const chatBox = document.getElementById('chat-box');
+    const msgDiv = document.createElement('div');
+    
+    // THE FIX: Added a random number so IDs are never identical
+    const uniqueId = 'msg-' + Date.now() + '-' + Math.floor(Math.random() * 10000);
+    
+    msgDiv.id = uniqueId;
+    msgDiv.className = 'message ' + className;
+    msgDiv.innerText = text;
+    
+    chatBox.appendChild(msgDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
+    
+    return uniqueId;
+}
 function addMessageToChat(text, className) {
     const chatBox = document.getElementById('chat-box');
     const msgDiv = document.createElement('div');
