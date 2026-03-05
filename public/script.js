@@ -71,15 +71,20 @@ function startSurprise() {
     }
 }
 
-// --- Chat Features ---
-
 async function sendMessage() {
     const inputField = document.getElementById('user-input');
+    const sendButton = document.querySelector('.input-area button');
     const message = inputField.value.trim();
+    
     if (!message) return;
+
+    // Lock the input and button so she cannot spam it
+    inputField.disabled = true;
+    sendButton.disabled = true;
 
     addMessageToChat(message, 'user-message');
     inputField.value = '';
+
     const loadingId = addMessageToChat('Thinking...', 'bot-message');
 
     try {
@@ -88,10 +93,17 @@ async function sendMessage() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ message: message })
         });
+        
         const data = await response.json();
         document.getElementById(loadingId).innerText = data.response;
+        
     } catch (error) {
         document.getElementById(loadingId).innerText = "Network issue.";
+    } finally {
+        // Unlock the input and button once the bot replies
+        inputField.disabled = false;
+        sendButton.disabled = false;
+        inputField.focus();
     }
 }
 
