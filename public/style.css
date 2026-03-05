@@ -1,54 +1,21 @@
 body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Georgia', serif;
+    margin: 0; padding: 0; font-family: 'Georgia', serif;
     background: linear-gradient(135deg, #ffe6f2 0%, #ffb3d9 100%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    overflow: hidden;
-    color: #4a0024;
+    display: flex; justify-content: center; align-items: center;
+    height: 100vh; overflow: hidden; color: #4a0024;
 }
 
-#bg-animations {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    pointer-events: none;
-}
+#bg-animations { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
 
 .css-heart {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background-color: #ff4d94;
-    transform: rotate(-45deg);
-    animation: floatUp 6s infinite ease-in;
-    opacity: 0.6;
+    position: absolute; width: 20px; height: 20px; background-color: #ff4d94;
+    transform: rotate(-45deg); animation: floatUp 6s infinite ease-in; opacity: 0.6;
 }
-
 .css-heart::before, .css-heart::after {
-    content: '';
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background-color: #ff4d94;
-    border-radius: 50%;
+    content: ''; position: absolute; width: 20px; height: 20px; background-color: #ff4d94; border-radius: 50%;
 }
-
-.css-heart::before {
-    top: -10px;
-    left: 0;
-}
-
-.css-heart::after {
-    top: 0;
-    left: 10px;
-}
+.css-heart::before { top: -10px; left: 0; }
+.css-heart::after { top: 0; left: 10px; }
 
 @keyframes floatUp {
     0% { transform: translateY(100vh) rotate(-45deg) scale(0.8); opacity: 0.8; }
@@ -56,62 +23,53 @@ body {
 }
 
 .container {
-    background: rgba(255, 255, 255, 0.95);
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    text-align: center;
-    width: 90%;
-    max-width: 500px;
+    background: rgba(255, 255, 255, 0.95); padding: 30px; border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; width: 90%; max-width: 500px;
 }
 
-h1 { font-size: 26px; margin-bottom: 10px; }
-.question { font-size: 18px; font-weight: bold; margin: 30px 0; }
-.button-container { position: relative; height: 100px; display: flex; justify-content: center; gap: 20px; align-items: flex-start; }
+.chat-header { display: flex; justify-content: center; align-items: center; position: relative; }
+h1 { font-size: 24px; margin-bottom: 5px; }
+#secret-vault { position: absolute; right: 0; top: 0; cursor: pointer; color: #ffb3d9; font-size: 20px; transition: color 0.3s; }
+#secret-vault:hover { color: #ff4d94; }
+
+.question { font-size: 18px; font-weight: bold; margin: 20px 0; }
+.security-input { padding: 10px; border: 2px solid #ff4d94; border-radius: 8px; width: 80%; margin-bottom: 20px; text-align: center; }
+
+.button-container { position: relative; height: 60px; display: flex; justify-content: center; gap: 20px; align-items: flex-start; }
 
 button {
-    padding: 12px 24px;
-    font-size: 16px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    background-color: #ff4d94;
-    color: white;
-    font-weight: bold;
+    padding: 10px 20px; font-size: 15px; border: none; border-radius: 8px;
+    cursor: pointer; transition: all 0.2s ease; background-color: #ff4d94; color: white; font-weight: bold;
 }
-
 button:hover { background-color: #e6005c; }
-
-#btn-no {
-    background-color: #cccccc;
-    color: #333;
-    position: absolute;
-}
-
-#btn-never {
-    background-color: #cccccc;
-    color: #333;
-}
+#btn-no, #btn-verify, #btn-never { background-color: #cccccc; color: #333; position: absolute; }
 
 .hidden { display: none !important; }
 
-#chat-box {
-    height: 300px;
-    overflow-y: auto;
-    background: #fff;
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 20px;
-    border: 1px solid #ffd9e6;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.message { padding: 10px 15px; border-radius: 15px; max-width: 80%; text-align: left; font-size: 15px; }
+#chat-box { height: 250px; overflow-y: auto; background: #fff; border-radius: 10px; padding: 15px; margin-bottom: 15px; border: 1px solid #ffd9e6; display: flex; flex-direction: column; gap: 10px; }
+.message { padding: 10px 15px; border-radius: 15px; max-width: 80%; text-align: left; font-size: 14px; }
 .bot-message { background-color: #ffe6f2; align-self: flex-start; border-bottom-left-radius: 2px; }
 .user-message { background-color: #ff4d94; color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
 
-.input-area { display: flex; gap: 10px; }
+.input-area { display: flex; gap: 10px; margin-bottom: 15px; }
 #user-input { flex-grow: 1; padding: 10px; border: 1px solid #ffb3d9; border-radius: 8px; outline: none; }
+
+.extra-controls { display: flex; justify-content: space-between; gap: 10px; }
+#btn-coupon { background-color: #ff9933; flex: 1; }
+#btn-guccha { background-color: #cc0000; flex: 1; }
+
+/* Modal Styles */
+.modal { position: fixed; z-index: 10; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; }
+.modal-content { background-color: white; padding: 30px; border-radius: 15px; text-align: center; max-width: 400px; position: relative; }
+.close { position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; color: #aaa; }
+.romantic-text { font-style: italic; color: #e6005c; margin-top: 15px; }
+
+/* Guccha Screen */
+#guccha-screen {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #ff0000; color: white;
+    z-index: 100; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px;
+}
+#guccha-screen h1 { font-size: 40px; animation: flash 0.5s infinite alternate; }
+#guccha-screen p { font-size: 20px; margin: 20px 0; }
+#guccha-screen button { background-color: white; color: red; font-size: 20px; padding: 15px 30px; }
+@keyframes flash { from { opacity: 1; } to { opacity: 0.5; } }
