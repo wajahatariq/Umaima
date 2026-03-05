@@ -1,23 +1,51 @@
-// The Trick Button Logic
+// Generate floating CSS background shapes
+function createBackgroundShapes() {
+    const bg = document.getElementById('bg-animations');
+    for (let i = 0; i < 15; i++) {
+        let shape = document.createElement('div');
+        shape.className = 'css-heart';
+        shape.style.left = Math.random() * 100 + 'vw';
+        shape.style.animationDuration = (Math.random() * 3 + 4) + 's';
+        shape.style.animationDelay = Math.random() * 5 + 's';
+        bg.appendChild(shape);
+    }
+}
+createBackgroundShapes();
+
+// Step 1: Dodging Button
 function dodgeButton() {
     const btnNo = document.getElementById('btn-no');
-    
-    // Generate random coordinates within the container
     const newLeft = Math.random() * 200 - 100;
     const newTop = Math.random() * 100 - 50;
-    
     btnNo.style.transform = `translate(${newLeft}px, ${newTop}px)`;
+}
+
+// Proceed to Step 2
+function goToStep2() {
+    document.getElementById('step-1').classList.add('hidden');
+    document.getElementById('step-2').classList.remove('hidden');
+}
+
+// Step 2: Shrinking Button
+let neverScale = 1;
+function shrinkButton() {
+    const btnNever = document.getElementById('btn-never');
+    neverScale -= 0.25;
+    if (neverScale <= 0) {
+        btnNever.style.display = 'none';
+    } else {
+        btnNever.style.transform = `scale(${neverScale})`;
+    }
 }
 
 // Transition to Chat and Play Music
 function startSurprise() {
-    document.getElementById('trick-screen').classList.add('hidden');
+    document.getElementById('step-2').classList.add('hidden');
     document.getElementById('chat-screen').classList.remove('hidden');
     
-    // Start the romantic background music
     const music = document.getElementById('bg-music');
     music.volume = 0.5;
-    music.play().catch(error => console.log("Audio autoplay blocked until interaction"));
+    music.play().catch(error => console.log("Audio play blocked"));
 }
 
 // Chatbot Logic
@@ -26,12 +54,10 @@ async function sendMessage() {
     const message = inputField.value.trim();
     if (!message) return;
 
-    // Display user message
     addMessageToChat(message, 'user-message');
     inputField.value = '';
 
-    // Add a temporary loading message
-    const loadingId = addMessageToChat('Thinking...', 'bot-message');
+    const loadingId = addMessageToChat('Soch raha hoon...', 'bot-message');
 
     try {
         const response = await fetch('/api/chat', {
@@ -41,12 +67,10 @@ async function sendMessage() {
         });
         
         const data = await response.json();
-        
-        // Replace loading message with real response
         document.getElementById(loadingId).innerText = data.response;
         
     } catch (error) {
-        document.getElementById(loadingId).innerText = "Oops, something went wrong connecting to the AI.";
+        document.getElementById(loadingId).innerText = "Net masla kar raha hai.";
     }
 }
 
@@ -65,7 +89,6 @@ function addMessageToChat(text, className) {
     return uniqueId;
 }
 
-// Allow pressing Enter to send
 document.getElementById('user-input').addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
         sendMessage();
