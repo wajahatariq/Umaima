@@ -83,5 +83,29 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="script.js"></script>
+    <div id="timeline-modal" class="modal hidden">
+        <div class="modal-content timeline-content">
+            <span class="close" onclick="closeTimeline()">&times;</span>
+            <h2>Our Journey</h2>
+            <div class="timeline-strip">
+                <div class="panel">March 8, 2024: The Journey Begins!</div>
+                <div class="panel">Countless Pista Ice Cream Dates</div>
+                <div class="panel">Surviving The Night Shifts</div>
+                <div class="panel">Today: 2 Years Strong!</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="coupon-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close" onclick="closeCoupon()">&times;</span>
+            <canvas id="coupon-canvas" width="400" height="200"></canvas>
+            <p style="margin-top:10px; font-weight:bold;">Long-press or right-click to save your Ticket!</p>
+        </div>
+    </div>
+
+    <div id="guccha-meter-container" class="hidden">
+        <div id="guccha-meter-bar"></div>
+    </div>
 </body>
 </html>
