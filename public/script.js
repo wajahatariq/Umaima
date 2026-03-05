@@ -94,13 +94,25 @@ async function sendMessage() {
             body: JSON.stringify({ message: message })
         });
         
+        // This catches Vercel server errors immediately
+        if (!response.ok) {
+            throw new Error("Server hiccup");
+        }
+        
         const data = await response.json();
-        document.getElementById(loadingId).innerText = data.response;
+        
+        // This catches empty or broken data from Groq
+        if (data && data.response) {
+            document.getElementById(loadingId).innerText = data.response;
+        } else {
+            throw new Error("Broken response data");
+        }
         
     } catch (error) {
-        document.getElementById(loadingId).innerText = "Network issue.";
+        console.error("Chat Error:", error);
+        document.getElementById(loadingId).innerText = "Network hiccup. Try sending that again, Moti.";
     } finally {
-        // Unlock the input and button once the bot replies
+        // Unlock the input and button no matter what happens
         inputField.disabled = false;
         sendButton.disabled = false;
         inputField.focus();
