@@ -42,7 +42,8 @@ button {
     cursor: pointer; transition: all 0.2s ease; background-color: #ff4d94; color: white; font-weight: bold;
 }
 button:hover { background-color: #e6005c; }
-#btn-no, #btn-verify, #btn-never { background-color: #cccccc; color: #333; position: absolute; }
+#btn-no, #btn-verify { background-color: #cccccc; color: #333; position: absolute; }
+#btn-never { background-color: #cccccc; color: #333; }
 
 .hidden { display: none !important; }
 
