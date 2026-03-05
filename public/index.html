@@ -17,25 +17,35 @@
     <div id="step-1" class="container">
         <h1>Assalam o Alaikum, Umaima!</h1>
         <p class="question">First, accept that you are Wajahat's favorite Moti and Chipkali.</p>
-        
         <div class="button-container">
-            <button id="btn-yes-1" onclick="goToStep2()">Fine, I accept</button>
-            <button id="btn-no" onmouseover="dodgeButton()">No</button>
+            <button id="btn-yes-1" onclick="goToStep('step-2')">Fine, I accept</button>
+            <button id="btn-no" onmouseover="dodgeElement('btn-no')">No</button>
         </div>
     </div>
 
     <div id="step-2" class="container hidden">
         <h1>Good girl.</h1>
         <p class="question">Now, do you forgive your Miyan G for those annoying office night shifts?</p>
-        
         <div class="button-container">
-            <button id="btn-yes-2" onclick="startSurprise()">Yes, I forgive you</button>
+            <button id="btn-yes-2" onclick="goToStep('step-3')">Yes, I forgive you</button>
             <button id="btn-never" onclick="shrinkButton()">Never</button>
         </div>
     </div>
 
+    <div id="step-3" class="container hidden">
+        <h1>Security Check!</h1>
+        <p class="question">To prove you are the real Umaima, what is the official ice cream flavor of this relationship?</p>
+        <input type="text" id="icecream-input" placeholder="Type flavor here..." class="security-input">
+        <div class="button-container">
+            <button id="btn-verify" onmouseover="verifyIceCream()">Verify Identity</button>
+        </div>
+    </div>
+
     <div id="chat-screen" class="container hidden">
-        <h1>Welcome to Wajahat AI</h1>
+        <div class="chat-header">
+            <h1>Welcome to Wajahat AI</h1>
+            <span id="secret-vault" onclick="openVault()">&#10084;</span>
+        </div>
         <p class="subtitle">Miyan G is busy, so I am here. Ask me anything, Kekri.</p>
         
         <div id="chat-box">
@@ -46,6 +56,27 @@
             <input type="text" id="user-input" placeholder="Type here...">
             <button onclick="sendMessage()">Send</button>
         </div>
+
+        <div class="extra-controls">
+            <button id="btn-coupon" onclick="generateCoupon()">Claim Miyan G Coupon</button>
+            <button id="btn-guccha" onclick="triggerGuccha()">I am Guccha!</button>
+        </div>
+    </div>
+
+    <div id="vault-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close" onclick="closeVault()">&times;</span>
+            <h2>Our Journey</h2>
+            <p id="days-counter"></p>
+            <p class="romantic-text">No trolling right now. You are my absolute world, Umaima. Every single day with you since March 8, 2024, has been a blessing. I love you so much, my Wifeyy. &#10084;</p>
+        </div>
+    </div>
+
+    <div id="guccha-screen" class="hidden">
+        <h1>ALERT: WIFEYY IS GUCCHA!</h1>
+        <p>Initiating emergency apology sequence...</p>
+        <p>I am so sorry! You are not a Chachundar, you are my beautiful princess! I love you! Ummmahhhhhhhhhhh!</p>
+        <button onclick="cancelGuccha()">Forgive Miyan G</button>
     </div>
 
     <script src="script.js"></script>
