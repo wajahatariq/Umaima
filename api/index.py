@@ -23,7 +23,7 @@ def generate_response(state: AgentState):
     )
     
     response = completion(
-        model="groq/llama3-8b-8192",
+        model="groq/llama-3.1-8b-instant",
         messages=[
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": state["user_input"]}
