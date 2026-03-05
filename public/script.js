@@ -47,14 +47,27 @@ function verifyIceCream() {
     }
 }
 
+// Transition to Chat, Force Play Music, and Blast Confetti
 function startSurprise() {
     goToStep('chat-screen');
+    
+    // Play Music
     const music = document.getElementById('bg-music');
     music.volume = 0.5;
     music.load(); 
     let playPromise = music.play();
     if (playPromise !== undefined) {
         playPromise.catch(error => console.log("Audio play blocked."));
+    }
+
+    // Trigger Massive Confetti Blast
+    if (typeof confetti === "function") {
+        confetti({
+            particleCount: 150,
+            spread: 90,
+            origin: { y: 0.6 },
+            colors: ['#ff4d94', '#ffb3d9', '#ffffff', '#e6005c']
+        });
     }
 }
 
