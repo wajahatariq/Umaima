@@ -10,7 +10,7 @@ class AgentState(TypedDict):
     bot_response: str
 
 def generate_response(state: AgentState):
-    # ADD YOUR FACTS HERE so the bot knows everything about her
+    # ADD YOUR FACTS HERE 
     system_prompt = (
         "You are a loving, romantic AI created by Wajahat to celebrate his 2nd anniversary with his girlfriend, Umaima. "
         "They started dating on March 8, 2024. Wajahat's nickname is 'Miyan G'. "
@@ -32,12 +32,14 @@ def generate_response(state: AgentState):
     
     return {"bot_response": response.choices[0].message.content}
 
+# Compile the LangGraph workflow
 workflow = StateGraph(AgentState)
 workflow.add_node("chat_node", generate_response)
 workflow.set_entry_point("chat_node")
 workflow.add_edge("chat_node", END)
 app_graph = workflow.compile()
 
+# Initialize API
 app = FastAPI(title="Anniversary API")
 
 class ChatRequest(BaseModel):
