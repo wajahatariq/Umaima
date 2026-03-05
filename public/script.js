@@ -173,3 +173,140 @@ function openVault() {
 function closeVault() {
     document.getElementById('vault-modal').classList.add('hidden');
 }
+
+// ==========================================
+// NEW FEATURES: PASTE AT THE VERY BOTTOM
+// ==========================================
+
+// 1. Interactive Timeline
+function openTimeline() { document.getElementById('timeline-modal').classList.remove('hidden'); }
+function closeTimeline() { document.getElementById('timeline-modal').classList.add('hidden'); }
+
+// Setup UI elements on load
+window.addEventListener('DOMContentLoaded', () => {
+    // Add timeline button to header
+    const header = document.querySelector('.chat-header');
+    if(header) {
+        const btn = document.createElement('button');
+        btn.innerText = "Memory Lane";
+        btn.onclick = openTimeline;
+        btn.style.marginLeft = "15px";
+        btn.style.padding = "5px 10px";
+        btn.style.fontSize = "12px";
+        header.appendChild(btn);
+    }
+    
+    // Move Guccha Meter into the chat screen
+    const chatScreen = document.getElementById('chat-screen');
+    const meter = document.getElementById('guccha-meter-container');
+    const chatBox = document.getElementById('chat-box');
+    if(chatScreen && meter && chatBox) {
+        chatScreen.insertBefore(meter, chatBox);
+        meter.classList.remove('hidden');
+    }
+});
+
+// 2. Visual Canvas Coupon (Overwrites old function)
+function generateCoupon() {
+    const coupons = [
+        "1 Free Plate of Biryani",
+        "No Night Shift Arguments",
+        "10 Mins of Continuous Kisses",
+        "One Free Pizza Date",
+        "Miyan G Admits He Is Wrong"
+    ];
+    const randomCoupon = coupons[Math.floor(Math.random() * coupons.length)];
+    
+    document.getElementById('coupon-modal').classList.remove('hidden');
+    const canvas = document.getElementById('coupon-canvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Draw Background
+    ctx.fillStyle = "#ffe6f2";
+    ctx.fillRect(0, 0, 400, 200);
+    ctx.strokeStyle = "#ff4d94";
+    ctx.lineWidth = 6;
+    ctx.strokeRect(10, 10, 380, 180);
+    ctx.setLineDash([10, 10]);
+    ctx.strokeRect(20, 20, 360, 160);
+    ctx.setLineDash([]);
+    
+    // Add Text
+    ctx.fillStyle = "#4a0024";
+    ctx.font = "bold 22px Georgia";
+    ctx.textAlign = "center";
+    ctx.fillText("OFFICIAL MIYAN G TICKET", 200, 60);
+    
+    ctx.font = "italic 16px Arial";
+    ctx.fillText("Valid for one:", 200, 100);
+    
+    ctx.fillStyle = "#e6005c";
+    ctx.font = "bold 20px Arial";
+    ctx.fillText(randomCoupon.toUpperCase(), 200, 140);
+    
+    ctx.fillStyle = "#000";
+    ctx.font = "14px Courier";
+    ctx.fillText("||| |||| || | |||| || |||", 200, 175);
+}
+function closeCoupon() { document.getElementById('coupon-modal').classList.add('hidden'); }
+
+// 3. Dynamic Guccha Meter API Integration (Overwrites old sendMessage)
+let currentGuccha = 0;
+async function sendMessage() {
+    const inputField = document.getElementById('user-input');
+    const sendButton = document.querySelector('.input-area button');
+    const message = inputField.value.trim();
+    
+    if (!message) return;
+
+    inputField.disabled = true;
+    sendButton.disabled = true;
+    addMessageToChat(message, 'user-message');
+    inputField.value = '';
+
+    const loadingId = addMessageToChat('Thinking...', 'bot-message');
+
+    try {
+        const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: message })
+        });
+        
+        if (!response.ok) throw new Error("Server hiccup");
+        const data = await response.json();
+        
+        if (data && data.response) {
+            document.getElementById(loadingId).innerText = data.response;
+            
+            // Handle AI Sentiment Guccha Score
+            if (data.guccha_score !== undefined) {
+                currentGuccha += data.guccha_score;
+                if (currentGuccha < 0) currentGuccha = 0;
+                
+                const meterBar = document.getElementById('guccha-meter-bar');
+                if(meterBar) {
+                    // Cap visual at 100%
+                    meterBar.style.width = Math.min(currentGuccha, 100) + '%'; 
+                }
+                
+                if (currentGuccha >= 100) {
+                    setTimeout(() => {
+                        triggerGuccha();
+                        currentGuccha = 0;
+                        if(meterBar) meterBar.style.width = '0%';
+                    }, 500);
+                }
+            }
+        } else {
+            throw new Error("Broken response data");
+        }
+    } catch (error) {
+        console.error("Chat Error:", error);
+        document.getElementById(loadingId).innerText = "Network hiccup. Try sending that again.";
+    } finally {
+        inputField.disabled = false;
+        sendButton.disabled = false;
+        inputField.focus();
+    }
+}
