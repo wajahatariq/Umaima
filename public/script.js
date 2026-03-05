@@ -131,17 +131,6 @@ function addMessageToChat(text, className) {
     
     return uniqueId;
 }
-function addMessageToChat(text, className) {
-    const chatBox = document.getElementById('chat-box');
-    const msgDiv = document.createElement('div');
-    const uniqueId = 'msg-' + Date.now();
-    msgDiv.id = uniqueId;
-    msgDiv.className = 'message ' + className;
-    msgDiv.innerText = text;
-    chatBox.appendChild(msgDiv);
-    chatBox.scrollTop = chatBox.scrollHeight;
-    return uniqueId;
-}
 
 document.getElementById('user-input').addEventListener('keypress', function(e) {
     if (e.key === 'Enter') sendMessage();
