@@ -9,30 +9,41 @@
 <body>
 
     <audio id="bg-music" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        <source src="audio.mp3" type="audio/mpeg">
     </audio>
 
-    <div id="trick-screen" class="container">
+    <div id="bg-animations"></div>
+
+    <div id="step-1" class="container">
         <h1>Assalam o Alaikum, Umaima!</h1>
-        <p>A message from your Miyan G...</p>
-        <p class="question">Are you happy with Wajahat?</p>
+        <p class="question">First, accept that you are Wajahat's favorite Moti and Chipkali.</p>
         
         <div class="button-container">
-            <button id="btn-yes" onclick="startSurprise()">Yes, totally!</button>
+            <button id="btn-yes-1" onclick="goToStep2()">Fine, I accept</button>
             <button id="btn-no" onmouseover="dodgeButton()">No</button>
         </div>
     </div>
 
+    <div id="step-2" class="container hidden">
+        <h1>Good girl.</h1>
+        <p class="question">Now, do you forgive your Miyan G for those annoying office night shifts?</p>
+        
+        <div class="button-container">
+            <button id="btn-yes-2" onclick="startSurprise()">Yes, I forgive you</button>
+            <button id="btn-never" onclick="shrinkButton()">Never</button>
+        </div>
+    </div>
+
     <div id="chat-screen" class="container hidden">
-        <h1>Welcome to your personalized Wajahat AI</h1>
-        <p class="subtitle">I know everything about you two. Ask me anything!</p>
+        <h1>Welcome to Wajahat AI</h1>
+        <p class="subtitle">Miyan G is busy, so I am here. Ask me anything, Kekri.</p>
         
         <div id="chat-box">
-            <div class="message bot-message">Happy 2nd Anniversary! Wajahat loves you very much. What would you like to ask me?</div>
+            <div class="message bot-message">Happy 2nd Anniversary! Wajahat loves you very much. Kya poochna hai?</div>
         </div>
         
         <div class="input-area">
-            <input type="text" id="user-input" placeholder="e.g., What is my favorite food?">
+            <input type="text" id="user-input" placeholder="Type here...">
             <button onclick="sendMessage()">Send</button>
         </div>
     </div>
