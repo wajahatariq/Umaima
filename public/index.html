@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Anniversary Umaima</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <audio id="bg-music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="trick-screen" class="container">
+        <h1>Assalam o Alaikum, Umaima!</h1>
+        <p>A message from your Miyan G...</p>
+        <p class="question">Are you happy with Wajahat?</p>
+        
+        <div class="button-container">
+            <button id="btn-yes" onclick="startSurprise()">Yes, totally!</button>
+            <button id="btn-no" onmouseover="dodgeButton()">No</button>
+        </div>
+    </div>
+
+    <div id="chat-screen" class="container hidden">
+        <h1>Welcome to your personalized Wajahat AI</h1>
+        <p class="subtitle">I know everything about you two. Ask me anything!</p>
+        
+        <div id="chat-box">
+            <div class="message bot-message">Happy 2nd Anniversary! Wajahat loves you very much. What would you like to ask me?</div>
+        </div>
+        
+        <div class="input-area">
+            <input type="text" id="user-input" placeholder="e.g., What is my favorite food?">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
